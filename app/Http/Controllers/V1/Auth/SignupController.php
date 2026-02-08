@@ -40,7 +40,7 @@ class SignupController extends Controller
         return $this->successResponse('Email verified successfully', [
             'token' => $this->tokenService->generateSanctumToken($user),
             'token_type' => $this->tokenService->getTokenType(),
-            'token_expiry_tine' => $this->tokenService->getTokenExpiryTime(),
+            'token_expiry_time' => $this->tokenService->getTokenExpiryTime(),
         ]);
     }
 }

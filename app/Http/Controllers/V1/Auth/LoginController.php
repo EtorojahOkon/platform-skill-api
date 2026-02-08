@@ -18,7 +18,7 @@ class LoginController extends Controller
             'user' =>  new UserResource($request->user()),
             'token' => $this->tokenService->generateSanctumToken($request->user()),
             'token_type' => $this->tokenService->getTokenType(),
-            'token_expiry_tine' => $this->tokenService->getTokenExpiryTime(),
+            'token_expiry_time' => $this->tokenService->getTokenExpiryTime(),
         ]);
     }
 }
