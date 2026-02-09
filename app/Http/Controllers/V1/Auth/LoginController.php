@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Services\V1\TokenService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -20,5 +21,12 @@ class LoginController extends Controller
             'token_type' => $this->tokenService->getTokenType(),
             'token_expiry_time' => $this->tokenService->getTokenExpiryTime(),
         ]);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return $this->successResponse('Logout successful');
     }
 }

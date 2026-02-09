@@ -38,4 +38,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::get('goals', [GoalController::class, 'index']);
+
+    Route::post('logout', [LoginController::class, 'logout']);
 });

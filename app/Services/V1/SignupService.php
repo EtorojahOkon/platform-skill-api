@@ -5,6 +5,7 @@ namespace App\Services\V1;
 use App\Models\User;
 use App\Notifications\Auth\VerifyEmailNotice;
 use App\Services\V1\OtpService;
+use Illuminate\Auth\Events\Verified;
 
 class SignupService
 {
@@ -21,6 +22,8 @@ class SignupService
         $otp = $this->otpService->generateOtp();
         $expiry = $this->otpService->getExpiryTime();
 
+        $this->otpService->storeOtp("EMAIL_VERIFICATION_{$user->email}", $otp);
+
         $user->notify(new VerifyEmailNotice($otp, $expiry));
 
         return $user;
@@ -32,6 +35,12 @@ class SignupService
             return false;
         }
 
-        return $user->forceFill(['email_verified_at' => now()])->save();
+        $verified = $user->forceFill(['email_verified_at' => now()])->save();
+        
+        if ($verified) {
+            event(new Verified($user));
+        }
+        
+        return $verified;
     }
 }

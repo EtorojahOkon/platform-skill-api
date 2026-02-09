@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Listeners\GoalTrackingSubscriber;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -31,8 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Event::subscribe(GoalTrackingSubscriber::class);
-
         JsonResource::withoutWrapping();
 
         $this->configureRoutes();

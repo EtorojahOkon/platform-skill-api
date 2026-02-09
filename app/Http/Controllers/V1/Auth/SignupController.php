@@ -38,6 +38,7 @@ class SignupController extends Controller
         $user->notify(new WelcomeNotice);
 
         return $this->successResponse('Email verified successfully', [
+            'user' => $user,
             'token' => $this->tokenService->generateSanctumToken($user),
             'token_type' => $this->tokenService->getTokenType(),
             'token_expiry_time' => $this->tokenService->getTokenExpiryTime(),

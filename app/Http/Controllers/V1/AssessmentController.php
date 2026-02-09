@@ -39,7 +39,7 @@ class AssessmentController extends Controller
     public function uploadChunk(Request $request, Assessment $assessment): JsonResponse
     {
         $request->validate([
-            'video_chunk' => 'required|file|mimes:webm',
+            'video_chunk' => 'required|file',
         ]);
 
         $chunk = $request->file('video_chunk');
@@ -66,8 +66,7 @@ class AssessmentController extends Controller
         $this->assessmentService->dispatchEvaluation($assessment);
 
         return $this->successResponse('Assessment evaluation started', [
-            'assessment_id' => $assessment->id,
-            'status' => $assessment->fresh()->status->value,
+            'assessment' => new AssessmentResource($assessment->refresh()),
         ]);
     }
 
